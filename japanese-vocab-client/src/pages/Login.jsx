@@ -1,10 +1,35 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const {signIn, setLoading} = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    try {
+      setLoading(true);
+      await signIn(email, password);
+      navigate(from, {replace: true});
+      toast.success("User SignIn Successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.massage);
+    }
+  };
+
   return (
     <div className="w-1/3 p-8 space-y-3 rounded-xl mx-auto border-2 mt-10">
       <h1 className="text-2xl font-bold text-center">Login</h1>
-      <form noValidate="" action="" className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-1 text-sm">
           <label htmlFor="email">Email</label>
           <input
