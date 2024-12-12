@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 const Register = () => {
-  const {createUser, updateUser, setLoading} = useAuth();
+  const {createUser, updateUser, setLoading, user, setUser} = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,7 +13,7 @@ const Register = () => {
     const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
-    
+
     try {
       setLoading(true);
       await createUser(email, password);
@@ -26,6 +26,7 @@ const Register = () => {
       const {data} = await axios.post("http://localhost:5000/user", newUser);
       console.log(data);
       await updateUser(name, photo);
+      setUser({...user, displayName: name, photo: photo});
       toast.success("User Create Successfully!");
     } catch (error) {
       console.log(error);
