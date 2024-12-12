@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const pronounceWord = (word) => {
   const utterance = new SpeechSynthesisUtterance(word);
@@ -92,7 +93,8 @@ const LessonCard = ({les, onDelete}) => {
         </div>
       </div>
       <div className="flex flex-wrap justify-between mt-5">
-        <button className="btn bg-orange-200 px-4 py-1 w-1/2">Edit</button>
+        <Link className="btn bg-orange-200 px-4 py-1 w-1/2" to={`/dashboard/update-lesson/${les._id}`}>Edit</Link>
+        {/* <button className="btn bg-orange-200 px-4 py-1 w-1/2"></button> */}
         <button
           onClick={deleteLesson}
           className="btn bg-red-500 px-4 py-1 w-1/2"

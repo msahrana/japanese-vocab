@@ -1,11 +1,12 @@
-import {useNavigate} from "react-router-dom";
+import {useLoaderData, useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const AddLessons = () => {
+const UpdateLesson = () => {
+  const item = useLoaderData();
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const handleUpdate = async (event) => {
     event.preventDefault();
     const form = event.target;
     const lesson = form.lesson.value;
@@ -20,7 +21,7 @@ const AddLessons = () => {
     const english4 = form.english4.value;
 
     try {
-      const newLesson = {
+      const lessonData = {
         lesson,
         name,
         japanes1,
@@ -32,13 +33,12 @@ const AddLessons = () => {
         english3,
         english4,
       };
-      const {data} = await axios.post(
-        "http://localhost:5000/lesson",
-        newLesson
+      const {data} = await axios.put(
+        `http://localhost:5000/lesson/${item._id}`,
+        lessonData
       );
       console.log(data);
-      toast.success("Lesson Create Successfully!");
-      form.reset();
+      toast.success("Lesson Updated Successfully!");
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -48,9 +48,9 @@ const AddLessons = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-8 md:ml-9">
-      <h1 className="text-3xl font-bold text-center my-10">Add Lesson:</h1>
+      <h1 className="text-3xl font-bold text-center my-10">Update Lesson:</h1>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleUpdate}
         className="w-2/3 mx-auto border-2 p-6 rounded-md space-y-5"
       >
         <div className="flex flex-col md:flex-row justify-between w-full ">
@@ -60,8 +60,9 @@ const AddLessons = () => {
               type="number"
               name="lesson"
               placeholder="Lesson Number"
-              required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.lesson}
+              readOnly
             />
           </div>
 
@@ -71,8 +72,9 @@ const AddLessons = () => {
               type="text"
               name="name"
               placeholder="Lesson Name"
-              required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.name}
+              readOnly
             />
           </div>
         </div>
@@ -88,6 +90,7 @@ const AddLessons = () => {
               placeholder="Japanese 1st Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.japanes1}
             />
           </div>
           <div className="w-full">
@@ -98,6 +101,7 @@ const AddLessons = () => {
               placeholder="English 1st Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.english1}
             />
           </div>
         </div>
@@ -111,6 +115,7 @@ const AddLessons = () => {
               placeholder="Japanese 2nd Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.japanes2}
             />
           </div>
           <div className="w-full">
@@ -121,6 +126,7 @@ const AddLessons = () => {
               placeholder="English 2nd Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.english2}
             />
           </div>
         </div>
@@ -134,6 +140,7 @@ const AddLessons = () => {
               placeholder="Japanese 3rd Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.japanes3}
             />
           </div>
           <div className="w-full">
@@ -144,6 +151,7 @@ const AddLessons = () => {
               placeholder="English 3rd Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.english3}
             />
           </div>
         </div>
@@ -157,6 +165,7 @@ const AddLessons = () => {
               placeholder="Japanese 4th Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.japanes4}
             />
           </div>
           <div className="w-full">
@@ -167,13 +176,14 @@ const AddLessons = () => {
               placeholder="English 4th Vocabulary"
               required
               className="border rounded pl-2 px-2 py-1 w-full mt-1 mb-2"
+              defaultValue={item.english4}
             />
           </div>
         </div>
         {/* Button */}
         <div>
           <button className="btn bg-[#B0A289] w-full text-xl text-white">
-            Add Lesson
+            Update Lesson
           </button>
         </div>
       </form>
@@ -181,4 +191,4 @@ const AddLessons = () => {
   );
 };
 
-export default AddLessons;
+export default UpdateLesson;

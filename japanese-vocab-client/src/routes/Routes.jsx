@@ -11,6 +11,7 @@ import UserManagement from "../components/UserManagement";
 import TutorialManagement from "../components/TutorialManagement";
 import ContentManagement from "../components/ContentManagement";
 import AddLessons from "../components/AddLessons";
+import UpdateLesson from "../components/UpdateLesson";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,11 @@ export const router = createBrowserRouter([
         path: "add-lessons",
         element: <AddLessons />,
       },
+      {
+        path: 'update-lesson/:id',
+        element: <UpdateLesson/>,
+        loader: ({params})=> fetch(`http://localhost:5000/lesson/${params.id}`)
+      }
     ],
   },
 ]);
