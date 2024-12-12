@@ -1,11 +1,15 @@
+import axios from "axios";
+import toast from "react-hot-toast";
+
 const pronounceWord = (word) => {
   const utterance = new SpeechSynthesisUtterance(word);
   utterance.lang = "ja-JP"; // Japanese language
   window.speechSynthesis.speak(utterance);
 };
 
-const LessonCard = ({les}) => {
+const LessonCard = ({les, onDelete}) => {
   const {
+    _id,
     lesson,
     name,
     japanes1,
@@ -17,6 +21,28 @@ const LessonCard = ({les}) => {
     english3,
     english4,
   } = les || {};
+
+  const deleteLesson = async () => {
+    if (!window.confirm("Are you sure you want to delete this lesson?")) {
+      return; 
+    }
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/lesson/${_id}`
+      );
+      if (response.status === 200) {
+        toast.success("Lesson deleted successfully!");
+        onDelete(_id); 
+      } else {
+        alert("Failed to delete the lesson. Try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting lesson:", error);
+      alert(
+        "An error occurred while deleting the lesson. Check the console for details."
+      );
+    }
+  };
 
   return (
     <div className="container mx-auto p-10 border-2 rounded-md bg-blue-50">
@@ -67,7 +93,12 @@ const LessonCard = ({les}) => {
       </div>
       <div className="flex flex-wrap justify-between mt-5">
         <button className="btn bg-orange-200 px-4 py-1 w-1/2">Edit</button>
-        <button className="btn bg-red-500 px-4 py-1 w-1/2">Delete</button>
+        <button
+          onClick={deleteLesson}
+          className="btn bg-red-500 px-4 py-1 w-1/2"
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

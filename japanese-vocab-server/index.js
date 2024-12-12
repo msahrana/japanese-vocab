@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const {MongoClient, ServerApiVersion} = require("mongodb");
+const {MongoClient, ServerApiVersion, ObjectId} = require("mongodb");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -58,6 +58,31 @@ async function run() {
 
     app.get("/lessons", async (req, res) => {
       const result = await lessonsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/lesson/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await lessonsCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.put("/lesson/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const lesson = req.body;
+      const updateDoc = {
+        $set: {...lesson},
+      };
+      const result = await lessonsCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
+    app.delete("/lesson/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await lessonsCollection.deleteOne(query);
       res.send(result);
     });
 
