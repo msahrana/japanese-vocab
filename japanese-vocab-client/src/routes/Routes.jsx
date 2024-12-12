@@ -7,6 +7,10 @@ import Register from "../pages/Register";
 import Tutorials from "../pages/Tutorials";
 import Lessons from "../pages/Lessons";
 import Dashboard from "../layout/Dashboard";
+import UserManagement from "../components/UserManagement";
+import TutorialManagement from "../components/TutorialManagement";
+import ContentManagement from "../components/ContentManagement";
+import AddLessons from "../components/AddLessons";
 
 export const router = createBrowserRouter([
   {
@@ -37,8 +41,25 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: '/dashboard',
-    element: <Dashboard/>,
-    children:[{}]
-  }
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "user-management",
+        element: <UserManagement />,
+      },
+      {
+        path: "tutorial-management",
+        element: <TutorialManagement />,
+      },
+      {
+        path: "content-management",
+        element: <ContentManagement />,
+      },
+      {
+        path: "add-lessons",
+        element: <AddLessons />,
+      },
+    ],
+  },
 ]);
