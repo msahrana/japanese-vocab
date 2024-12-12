@@ -26,6 +26,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const usersCollection = client.db("BunpoMasterDB").collection("users");
+    const lessonsCollection = client.db("BunpoMasterDB").collection("lessons");
 
     app.post("/user", async (req, res) => {
       const user = req.body;
@@ -46,6 +47,12 @@ async function run() {
     app.get("/user/:email", async (req, res) => {
       const email = req.params.email;
       const result = await usersCollection.findOne({email});
+      res.send(result);
+    });
+
+    app.post("/lesson", async (req, res) => {
+      const lesson = req.body;
+      const result = await lessonsCollection.insertOne(lesson);
       res.send(result);
     });
 
