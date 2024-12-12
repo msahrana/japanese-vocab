@@ -56,7 +56,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/lesson", async (req, res) => {
+    app.get("/lessons", async (req, res) => {
       const result = await lessonsCollection.find().toArray();
       res.send(result);
     });
