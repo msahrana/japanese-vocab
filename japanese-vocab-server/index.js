@@ -50,6 +50,17 @@ async function run() {
       res.send(result);
     });
 
+    app.patch("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const user = req.body;
+      const updateDoc = {
+        $set: {...user},
+      };
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
     app.post("/lesson", async (req, res) => {
       const lesson = req.body;
       const result = await lessonsCollection.insertOne(lesson);

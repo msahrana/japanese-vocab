@@ -1,8 +1,12 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
+import toast from "react-hot-toast";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [updatedRole, setUpdatedRole] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -16,6 +20,43 @@ const UserManagement = () => {
 
     fetchUsers();
   }, []);
+
+  const openModal = (user) => {
+    setSelectedUser(user);
+    setUpdatedRole(user.role); // Set the current role as default
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedUser(null);
+    setUpdatedRole("");
+    setIsModalOpen(false);
+  };
+
+  const handleRoleUpdate = async () => {
+    if (!updatedRole || updatedRole === selectedUser.role) {
+      return;
+    }
+
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/user/${selectedUser._id}`,
+        {role: updatedRole}
+      );
+
+      if (response.status === 200) {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user._id === selectedUser._id ? {...user, role: updatedRole} : user
+          )
+        );
+        toast.success("User Role Changed Successfully!");
+        closeModal();
+      }
+    } catch (error) {
+      console.error("Error updating role:", error);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 sm:px-8 md:ml-9">
@@ -35,7 +76,6 @@ const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Render rows only if users is not empty */}
             {users.length > 0 ? (
               users.map((user, index) => (
                 <tr key={index}>
@@ -53,13 +93,12 @@ const UserManagement = () => {
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td>
-                    <span className="relative cursor-pointer inline-block px-3 py-1 font-bold text-white leading-tight">
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-0 bg-[#B0A289]  rounded-full text-white"
-                      ></span>
-                      <span className="relative">Update Role</span>
-                    </span>
+                    <button
+                      className="relative cursor-pointer inline-block px-3 py-1 font-bold text-white leading-tight bg-[#B0A289] rounded-full"
+                      onClick={() => openModal(user)}
+                    >
+                      Update Role
+                    </button>
                   </td>
                 </tr>
               ))
@@ -73,6 +112,40 @@ const UserManagement = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && selectedUser && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-green-400 p-5 rounded shadow-lg w-96">
+            <h2 className="text-lg font-bold mb-4">Update Role</h2>
+            <p>
+              Update role for <strong>{selectedUser.name}</strong>
+            </p>
+            <select
+              className="mt-3 p-2 border rounded"
+              value={updatedRole}
+              onChange={(e) => setUpdatedRole(e.target.value)}
+            >
+              <option value="User">User</option>
+              <option value="Admin">Admin</option>
+            </select>
+            <div className="mt-4 flex justify-end space-x-3">
+              <button
+                className="px-4 py-2 bg-gray-300 rounded"
+                onClick={closeModal}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded"
+                onClick={handleRoleUpdate}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
