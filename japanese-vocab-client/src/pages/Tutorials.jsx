@@ -1,15 +1,15 @@
 const Tutorials = () => {
-  // const videos = [
-  //   "https://www.youtube.com/embed/12VQYnuIgrM?si=keJPkuLTL49kQaWV",
-  //   "https://www.youtube.com/embed/8LKSA-NvtgY?si=qUfkJMXZUZiWZ3Uw",
-  //   "https://www.youtube.com/embed/k-OTYdsLgCk?si=AD0uekfFFUK0Muap",
-  //   "https://www.youtube.com/embed/7NxQafrDS8s?si=rCOXo9itFaDrxekL",
-  //   "https://www.youtube.com/embed/1K196d_Xw3Q?si=cBgRj1EnXrqfan53",
-  //   "https://www.youtube.com/embed/BnQR98XwGAg?si=s0rkT3UW6MbKYoEI",
-  //   "https://www.youtube.com/embed/yoRq8iMHqTU?si=fFlKTP5KWtU1xyMj",
-  //   "https://www.youtube.com/embed/IfUWs94G_l8?si=8h2AOisIJkRzVDR0",
-  //   "https://www.youtube.com/embed/FtTgvmR60Hw?si=2UOuMlMVKiT-Npvz",
-  // ];
+  const videos = [
+    "https://www.youtube.com/embed/12VQYnuIgrM?si=keJPkuLTL49kQaWV",
+    "https://www.youtube.com/embed/8LKSA-NvtgY?si=qUfkJMXZUZiWZ3Uw",
+    "https://www.youtube.com/embed/k-OTYdsLgCk?si=AD0uekfFFUK0Muap",
+    "https://www.youtube.com/embed/7NxQafrDS8s?si=rCOXo9itFaDrxekL",
+    "https://www.youtube.com/embed/1K196d_Xw3Q?si=cBgRj1EnXrqfan53",
+    "https://www.youtube.com/embed/BnQR98XwGAg?si=s0rkT3UW6MbKYoEI",
+    "https://www.youtube.com/embed/yoRq8iMHqTU?si=fFlKTP5KWtU1xyMj",
+    "https://www.youtube.com/embed/IfUWs94G_l8?si=8h2AOisIJkRzVDR0",
+    "https://www.youtube.com/embed/FtTgvmR60Hw?si=2UOuMlMVKiT-Npvz",
+  ];
 
   return (
     <div>
