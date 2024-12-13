@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import useRole from "../hooks/useRole";
 
 const pronounceWord = (word) => {
   const utterance = new SpeechSynthesisUtterance(word);
@@ -9,6 +10,8 @@ const pronounceWord = (word) => {
 };
 
 const LessonCard = ({les, onDelete}) => {
+  const [role] = useRole();
+
   const {
     _id,
     lesson,
@@ -25,7 +28,7 @@ const LessonCard = ({les, onDelete}) => {
 
   const deleteLesson = async () => {
     if (!window.confirm("Are you sure you want to delete this lesson?")) {
-      return; 
+      return;
     }
     try {
       const response = await axios.delete(
@@ -33,7 +36,7 @@ const LessonCard = ({les, onDelete}) => {
       );
       if (response.status === 200) {
         toast.success("Lesson deleted successfully!");
-        onDelete(_id); 
+        onDelete(_id);
       } else {
         alert("Failed to delete the lesson. Try again.");
       }
@@ -92,16 +95,23 @@ const LessonCard = ({les, onDelete}) => {
           <p>{english4}</p>
         </div>
       </div>
-      <div className="flex flex-wrap justify-between mt-5">
-        <Link className="btn bg-orange-200 px-4 py-1 w-1/2" to={`/dashboard/update-lesson/${les._id}`}>Edit</Link>
-        {/* <button className="btn bg-orange-200 px-4 py-1 w-1/2"></button> */}
-        <button
-          onClick={deleteLesson}
-          className="btn bg-red-500 px-4 py-1 w-1/2"
-        >
-          Delete
-        </button>
-      </div>
+      {role === "Admin" && (
+        <div className="flex flex-wrap justify-between mt-5">
+          <Link
+            className="btn bg-orange-200 px-4 py-1 w-1/2"
+            to={`/dashboard/update-lesson/${les._id}`}
+          >
+            Edit
+          </Link>
+
+          <button
+            onClick={deleteLesson}
+            className="btn bg-red-500 px-4 py-1 w-1/2"
+          >
+            Delete
+          </button>
+        </div>
+      )}
     </div>
   );
 };

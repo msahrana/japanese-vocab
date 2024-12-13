@@ -12,6 +12,8 @@ import TutorialManagement from "../components/TutorialManagement";
 import ContentManagement from "../components/ContentManagement";
 import AddLessons from "../components/AddLessons";
 import UpdateLesson from "../components/UpdateLesson";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -21,15 +23,27 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/tutorials",
-        element: <Tutorials />,
+        element: (
+          <PrivateRoute>
+            <Tutorials />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/lessons",
-        element: <Lessons />,
+        element: (
+          <PrivateRoute>
+            <Lessons />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -43,11 +57,19 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
     children: [
       {
         path: "user-management",
-        element: <UserManagement />,
+        element: (
+          <AdminRoute>
+            <UserManagement />
+          </AdminRoute>
+        ),
       },
       {
         path: "tutorial-management",
@@ -59,13 +81,22 @@ export const router = createBrowserRouter([
       },
       {
         path: "add-lessons",
-        element: <AddLessons />,
+        element: (
+          <AdminRoute>
+            <AddLessons />
+          </AdminRoute>
+        ),
       },
       {
-        path: 'update-lesson/:id',
-        element: <UpdateLesson/>,
-        loader: ({params})=> fetch(`http://localhost:5000/lesson/${params.id}`)
-      }
+        path: "update-lesson/:id",
+        element: (
+          <AdminRoute>
+            <UpdateLesson />
+          </AdminRoute>
+        ),
+        loader: ({params}) =>
+          fetch(`http://localhost:5000/lesson/${params.id}`),
+      },
     ],
   },
 ]);

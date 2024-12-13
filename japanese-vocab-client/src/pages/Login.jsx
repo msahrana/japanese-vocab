@@ -1,12 +1,10 @@
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 
 const Login = () => {
   const {signIn, setLoading} = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,7 +15,7 @@ const Login = () => {
     try {
       setLoading(true);
       await signIn(email, password);
-      navigate(from, {replace: true});
+      navigate("/lessons");
       toast.success("User SignIn Successfully!");
     } catch (error) {
       console.log(error);
