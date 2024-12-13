@@ -34,14 +34,13 @@ const UpdateLesson = () => {
         english4,
       };
       const {data} = await axios.put(
-        `http://localhost:5000/lesson/${item._id}`,
+        `https://japanese-vocab-server-neon.vercel.app/lesson/${item._id}`,
         lessonData
       );
-      console.log(data);
+
       toast.success("Lesson Updated Successfully!");
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
       toast.error(error.massage);
     }
   };

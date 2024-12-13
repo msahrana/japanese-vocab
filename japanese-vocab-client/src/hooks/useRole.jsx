@@ -11,16 +11,15 @@ const useRole = () => {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/user/${user?.email}`
+          `https://japanese-vocab-server-neon.vercel.app/user/${user?.email}`
         );
-        return response.data?.role || ""; 
+        return response.data?.role || "";
       } catch (error) {
         console.error("Failed to fetch role:", error);
-        return ""; 
+        return "";
       }
     },
   });
-
 
   return [role, isLoading];
 };

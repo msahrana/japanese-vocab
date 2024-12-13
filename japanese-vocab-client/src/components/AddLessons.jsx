@@ -33,15 +33,14 @@ const AddLessons = () => {
         english4,
       };
       const {data} = await axios.post(
-        "http://localhost:5000/lesson",
+        "https://japanese-vocab-server-neon.vercel.app/lesson",
         newLesson
       );
-      console.log(data);
+
       toast.success("Lesson Create Successfully!");
       form.reset();
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
       toast.error(error.massage);
     }
   };

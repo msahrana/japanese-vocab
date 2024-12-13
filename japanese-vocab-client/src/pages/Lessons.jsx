@@ -8,8 +8,10 @@ const Lessons = () => {
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const {data} = await axios.get("http://localhost:5000/lessons");
-        setLessons(data); 
+        const {data} = await axios.get(
+          "https://japanese-vocab-server-neon.vercel.app/lessons"
+        );
+        setLessons(data);
       } catch (error) {
         console.error("Error fetching lessons:", error);
       }

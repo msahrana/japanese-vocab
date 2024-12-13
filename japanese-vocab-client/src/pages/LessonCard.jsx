@@ -32,7 +32,7 @@ const LessonCard = ({les, onDelete}) => {
     }
     try {
       const response = await axios.delete(
-        `http://localhost:5000/lesson/${_id}`
+        `https://japanese-vocab-server-neon.vercel.app/lesson/${_id}`
       );
       if (response.status === 200) {
         toast.success("Lesson deleted successfully!");

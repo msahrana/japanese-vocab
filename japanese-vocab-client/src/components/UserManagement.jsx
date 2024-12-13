@@ -11,7 +11,9 @@ const UserManagement = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const {data} = await axios.get("http://localhost:5000/users");
+        const {data} = await axios.get(
+          "https://japanese-vocab-server-neon.vercel.app/users"
+        );
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -40,7 +42,7 @@ const UserManagement = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:5000/user/${selectedUser._id}`,
+        `https://japanese-vocab-server-neon.vercel.app/user/${selectedUser._id}`,
         {role: updatedRole}
       );
 

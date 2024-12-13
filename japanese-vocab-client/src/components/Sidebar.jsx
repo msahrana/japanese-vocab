@@ -18,7 +18,7 @@ const Sidebar = () => {
       await logOut();
       toast.success("User Logout Successfully!");
     } catch (error) {
-      console.log(error);
+      
       toast.error("Logout Failed!");
     }
   };

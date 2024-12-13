@@ -17,7 +17,7 @@ const AdminRoute = ({children}) => {
     return children;
   }
 
-  return <Navigate to="/lessons" state={{from: location}} replace />;
+  return <Navigate to="/dashbaord" state={{from: location}} replace />;
 };
 
 export default AdminRoute;

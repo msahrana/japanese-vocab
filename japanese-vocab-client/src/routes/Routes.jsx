@@ -95,7 +95,9 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({params}) =>
-          fetch(`http://localhost:5000/lesson/${params.id}`),
+          fetch(
+            `https://japanese-vocab-server-neon.vercel.app/lesson/${params.id}`
+          ),
       },
     ],
   },

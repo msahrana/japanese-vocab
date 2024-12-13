@@ -18,7 +18,7 @@ const Login = () => {
       navigate("/lessons");
       toast.success("User SignIn Successfully!");
     } catch (error) {
-      console.log(error);
+    
       toast.error(error.massage);
     }
   };

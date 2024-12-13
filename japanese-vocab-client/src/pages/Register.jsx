@@ -23,13 +23,16 @@ const Register = () => {
         email,
         role: "User",
       };
-      const {data} = await axios.post("http://localhost:5000/user", newUser);
+      const {data} = await axios.post(
+        "https://japanese-vocab-server-neon.vercel.app/user",
+        newUser
+      );
       console.log(data);
       await updateUser(name, photo);
       setUser({...user, displayName: name, photo: photo});
       toast.success("User Create Successfully!");
     } catch (error) {
-      console.log(error);
+  
       toast.error(error.massage);
     }
   };
